@@ -1,12 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import Index from './pages/index';
+import CreateTool from './pages/Create';
+import Index from './pages/Index';
 
 const Routes: React.FC = () => {
     return (
         <Switch>
-            <Route  path="/v1/tools" component={Index} />
-            <Route path="/v1/tools/create" component={Index} />
+            <Route  path="/v1/tools" exact component={Index} />
+            <Route path="/v1/tools/create" exact component={CreateTool} />
         </Switch>
     );
 }
