@@ -5,14 +5,47 @@
     text-align: center;
 }
 
+.main-container .header-container {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+}
+
 .main-container ul {
     list-style: none;
     display: grid;
-    background-color: rgb(245, 243, 243);
     margin: 30px;
 }
 
 .main-container ul li {
     display: grid;
     flex-direction: column;
+    background-color: rgb(245, 243, 243);
+    text-align: left;
+    padding-left: 20px;
+}
+
+.main-container ul li#tool-li {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    margin: 10px;
+}
+
+.main-container ul li#tool-li strong {
+    text-decoration: underline;
+    margin: 5px;
+    color: rgb(59, 38, 252);
+}
+
+.main-container ul li#tag-li {
+    display: inline;
+}
+
+.button-plus {
+    border-style: solid;
+    border-color: black;
+    border-width: 2px;
+    background-color: rgb(245, 243, 243);
+    height: 20px;
 }

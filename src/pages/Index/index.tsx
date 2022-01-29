@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { FormControl, InputGroup } from 'react-bootstrap';
 import api from '../../services/api';
 import './index.css';
 
@@ -26,10 +27,24 @@ const Index: React.FC = () => {
 
     return (
         <div className='main-container'>
+            <div className='header-container'>
+                <InputGroup className="mb-3">
+                    <InputGroup.Text id="basic-addon1"></InputGroup.Text>
+                    <img src="src\assets\lupa.svg" alt="lupa" />
+                    <FormControl
+                    placeholder="search"
+                    aria-label="search"
+                    aria-describedby="basic-addon1"
+                    />
+                </InputGroup>
+                <button className='button-plus'>
+                    <img src='src\assets\plus.svg' alt='plus'></img>
+                    Add</button>
+            </div>
             <ul>
             {tools.map(tool => (
                 <li id='tool-li' key={tool.id}>
-                    <text>{tool.title}</text>
+                    <strong>{tool.title}</strong>
                     <a href={tool.link}>{tool.link}</a>
                     <p>{tool.description}</p>
                     <footer><b>
