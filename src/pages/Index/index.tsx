@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Modal } from 'react-bootstrap';
 import api from '../../services/api';
 import { ITool } from '../../models/ITool'
 import './index.css';
@@ -11,6 +11,11 @@ export default function Index({history}) {
     const [search, setSearch] = useState('');
     const [tagFilter, setTagFilter] = useState(false);
     const [titleFilter, setTitleFilter] = useState(false);
+    const [show, setShow] = useState(false);
+    const [id, setId] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     useEffect(() => {
         loadTools()
@@ -60,7 +65,7 @@ export default function Index({history}) {
             {tools.map(tool => (
                 <li id='tool-li' key={tool.id}>
                     <a href='{tool.link}'>{tool.title}</a>
-                    <button onClick={() => removeTool(tool.id)}>remove</button>
+                    <button onClick={e => {setId(tool.id);handleShow()}}>remove</button>
                     <p>{tool.description}</p>
                     <footer><b>
                     {tool.tags.map(tag => (
@@ -70,6 +75,20 @@ export default function Index({history}) {
                 </li>
             ))}
             </ul>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title>Remove Tool</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to remove this Tool?</Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Cancel
+                </Button>
+                <Button variant="primary" onClick={e => {removeTool(id);handleClose()}}>
+                    Yes, remove
+                </Button>
+                </Modal.Footer>
+            </Modal>
         </div>
     );
 }
