@@ -1,15 +1,13 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import CreateTool from './pages/Create';
+import Form from './pages/Form';
 import Index from './pages/Index';
 
-const Routes: React.FC = () => {
+export default function Routes() {
     return (
         <Switch>
             <Route path="/v1/tools" exact component={Index} />
-            <Route path="/v1/tools/:id" exact component={CreateTool} />
+            <Route path="/v1/tools/:id" exact component={Form} />
         </Switch>
     );
 }
-
-export default Routes;
