@@ -21,18 +21,25 @@ const Index: React.FC = () => {
     async function loadTools() {
         const response = await api.get("/v1/tools");
         setTools(response.data);
+        console.log(response.data);
     }
 
     return (
-        <div className='container'>
-            {tools.map(tool => {
-                <ul key={tool.id}>
-                    <li>{tool.title}</li>
-                    <li>{tool.link}</li>
-                    <li>{tool.description}</li>
-                    <li>{tool.tags}</li>
-                </ul>
-            })}
+        <div className='main-container'>
+            <ul>
+            {tools.map(tool => (
+                <li id='tool-li' key={tool.id}>
+                    <text>{tool.title}</text>
+                    <a href={tool.link}>{tool.link}</a>
+                    <p>{tool.description}</p>
+                    <footer><b>
+                    {tool.tags.map(tag => (
+                        <li id='tag-li' key={tag}>{tag = "#" + tag}</li>
+                    ))}
+                    </b></footer>
+                </li>
+            ))}
+            </ul>
         </div>
     );
 }

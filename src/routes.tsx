@@ -6,8 +6,8 @@ import Index from './pages/Index';
 const Routes: React.FC = () => {
     return (
         <Switch>
-            <Route  path="/v1/tools" exact component={Index} />
-            <Route path="/v1/tools/create" exact component={CreateTool} />
+            <Route path="/v1/tools" exact component={Index} />
+            <Route path="/v1/tools/:id" exact component={CreateTool} />
         </Switch>
     );
 }
