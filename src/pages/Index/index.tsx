@@ -8,6 +8,9 @@ import './index.css';
 
 export default function Index({history}) {
     const [tools, setTools] = useState<ITool[]>([]);
+    const [search, setSearch] = useState('');
+    const [tagFilter, setTagFilter] = useState(false);
+    const [titleFilter, setTitleFilter] = useState(false);
 
     useEffect(() => {
         loadTools()
@@ -19,27 +22,37 @@ export default function Index({history}) {
         console.log(response.data);
     }
 
+    async function searchTools() {
+        if(tagFilter) {
+            const response = await api.get("/v1/tools", {params: {tag: search}});
+            setTools(response.data);
+            console.log(response.data);
+        } else if(titleFilter) {
+            const response = await api.get("/v1/tools", {params: {title: search}});
+            setTools(response.data);
+            console.log(response.data);
+        } 
+    }
+
     async function addTool() {
-        history.push("/v1/tools/:id")
+        history.push("/v1/tools/form");
     }
 
     async function removeTool(id: string) {
-        const response = await api.delete("v1/tools/:id", {
-            params: id
-        });
-        console.log("Tool excluída")
+        const response = await api.delete(`v1/tools/${id}`);  
+        console.log(response) 
+        loadTools()
     }
 
     return (
         <div className='main-container'>
             <div className='header-container'>
                 <Form.Group className="mb-3" controlId="formBasicTitle">
-                    <Form.Control type="text" placeholder="Search" />
+                    <Form.Control type="text" placeholder="Search" onKeyPress={searchTools} onChange={e => setSearch(e.target.value)}/>
+                    <Form.Check type="checkbox" label="By tags only" onChange={e => setTagFilter(true)}/>
+                    <Form.Check type="checkbox" label="By title only" onChange={e => setTitleFilter(true)}/>
                 </Form.Group>
-                <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="By tags only" />
-                </Form.Group>
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" onClick={addTool}>
                     Add Tool
                 </Button>
             </div>
@@ -47,7 +60,7 @@ export default function Index({history}) {
             {tools.map(tool => (
                 <li id='tool-li' key={tool.id}>
                     <a href='{tool.link}'>{tool.title}</a>
-                    <button onClick={e => removeTool(tool.id)}>remove</button>
+                    <button onClick={() => removeTool(tool.id)}>remove</button>
                     <p>{tool.description}</p>
                     <footer><b>
                     {tool.tags.map(tag => (
