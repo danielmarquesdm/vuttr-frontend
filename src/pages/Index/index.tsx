@@ -1,15 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { FormControl, InputGroup } from 'react-bootstrap';
+import { Button, Form } from 'react-bootstrap';
 import api from '../../services/api';
+import { ITool } from '../../models/ITool'
 import './index.css';
 
-interface ITool {
-    id: string;
-    title: string;
-    link: string;
-    description: string;
-    tags: string[]
-}
+
 
 export default function Index({history}) {
     const [tools, setTools] = useState<ITool[]>([]);
@@ -32,26 +27,21 @@ export default function Index({history}) {
         const response = await api.delete("v1/tools/:id", {
             params: id
         });
+        console.log("Tool excluída")
     }
 
     return (
         <div className='main-container'>
             <div className='header-container'>
-                <InputGroup className="mb-3">
-                    <InputGroup.Text id="basic-addon1"></InputGroup.Text>
-                    {/* <img src="src\assets\lupa.svg" alt="lupa" /> */}
-                    <FormControl
-                    placeholder="search"
-                    aria-label="search"
-                    aria-describedby="basic-addon1"
-                    />
-                </InputGroup>
-                <input type='checkbox'/>
-                <p>by tags only</p>
-                <button className='button-plus' onClick={e => addTool()}>
-                    {/* <img src='src\assets\plus.svg' alt='plus'></img> */}
-                    Add
-                </button>
+                <Form.Group className="mb-3" controlId="formBasicTitle">
+                    <Form.Control type="text" placeholder="Search" />
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                    <Form.Check type="checkbox" label="By tags only" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Add Tool
+                </Button>
             </div>
             <ul>
             {tools.map(tool => (
